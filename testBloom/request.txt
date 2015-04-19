@@ -1,2 +1,2 @@
-{ "securities": [ "HOG US Equity"], 
+{ "securities": [ "BUD US Equity"], 
 "fields": ["PX_LAST", "OPEN"] }

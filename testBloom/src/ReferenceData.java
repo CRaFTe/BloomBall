@@ -19,17 +19,21 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
 public class ReferenceData {
+	private String ticker;
+	ReferenceData(){}
+	ReferenceData(String ticker) {
+		setTicker(ticker);
+	}
+	
  public static final String apiUrl = "https://http-api.openbloomberg.com"
      + "/request?ns=blp&service=refdata&type=ReferenceDataRequest";
  public static final String keyStorePW = "secure";
  public static final String trustStorePW = "secure2";
  public static final String clientCert = "./src/client.p12";
  public static final String bbCert = "./src/bloomberg.jks";
+ public double getPercentChange(String startDate, String endDate) {
+	 double percentChange = 0;
 
- public static void main(String[] args) {
-	 String ticker = "HOG";
-	 String startDate = "20140416";
-	 String endDate = "20140417";
 	try {
 		PrintWriter writer = new PrintWriter("request.txt", "UTF-8");
 		writer.println("{ \"securities\": [ " + "\"" + ticker + " US Equity\"], "); 
@@ -137,9 +141,18 @@ public class ReferenceData {
 //        	 System.out.println(responseFields[i]);
 
          }
-         System.out.printf( "Percent Difference between Close and Open = %.3f", (px_last - open) / open);
+         percentChange = (px_last - open) / open * 100.0;
+         System.out.printf( "Percent Difference between Close and Open = %.2f", percentChange) ;
+         
      } catch (Exception e) {
          e.printStackTrace();
      }
+     return percentChange;
  }
+public String getTicker() {
+	return ticker;
+}
+public void setTicker(String ticker) {
+	this.ticker = ticker;
+}
 }
